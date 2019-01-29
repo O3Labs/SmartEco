@@ -1,0 +1,7 @@
+*.js
+*.d.ts.map
+*.d.ts
+*.js.map
+node_modules/
+.DS_STORE
+!webpack_config.js
