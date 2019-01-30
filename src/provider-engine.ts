@@ -1,11 +1,11 @@
 import { NEOProvider, NEOProviderPayload, NEOProviderAPI } from "./provider";
-import { getAccount, getBalance, getProvider, getNetworks } from "o3-dapi-neo"
+import { getAccount, getBalance, getProvider, getNetworks } from "o3-dapi-neo";
 import o3dapi from 'o3-dapi-core';
 
 export class NEOProviderEngine {
     protected _working: boolean;
     protected _providers: any[] = [];
-    
+
     protected _o3Provider: NEOProvider
 
     constructor() {
@@ -15,7 +15,7 @@ export class NEOProviderEngine {
             getNetworks: o3dapi.getNetworks,
             getProvider: o3dapi.getProvider
         }
-        
+
         this._o3Provider = new NEOProvider(o3API)
         this._providers.push(this._o3Provider)
     }
@@ -52,11 +52,11 @@ export class NEOProviderEngine {
 
         const next = async () => {
             ++currentProviderIndex;
-      
+
             if (this._providers.length <= currentProviderIndex) {
               return await end(new Error(`Requested method ${method} is not handled by any providers.`));
             }
-      
+
             try {
               return await this._providers[currentProviderIndex].handleRequest(payload, next, end);
             } catch (e) {

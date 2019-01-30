@@ -2,14 +2,32 @@
   "name": "neodapi-provider-engine",
   "version": "1.0.0",
   "description": "",
-  "main": "provider-engine.js",
-  "dependencies": {
-    "o3-dapi-neo": "^0.0.14",
-    "tslint": "^5.12.1"
-  },
-  "devDependencies": {},
+  "main": "lib/provider-engine.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode development",
+    "dist": "webpack --mode production --env.DISTRIBUTION=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O3Labs/neodapi-provider-engine.git"
+  },
+  "author": "Andrei T.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/O3Labs/neodapi-provider-engine/issues"
+  },
+  "dependencies": {
+    "o3-dapi-core": "0.0.10",
+    "o3-dapi-neo": "0.0.14"
+  },
+  "devDependencies": {
+    "ts-loader": "5.2.2",
+    "tslint": "5.11.0",
+    "tslint-loader": "3.5.4",
+    "typescript": "2.9.1",
+    "webpack": "4.21.0",
+    "webpack-cli": "3.1.2"
   },
   "author": "",
   "license": "ISC"

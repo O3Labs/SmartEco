@@ -1,7 +1,5 @@
-*.js
-*.d.ts.map
-*.d.ts
-*.js.map
-node_modules/
 .DS_STORE
-!webpack_config.js
+.DS_Store
+node_modules
+npm-debug.log
+build
