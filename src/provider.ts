@@ -1,14 +1,16 @@
 import { NEOProviderEngine } from "./provider-engine";
-import { getAccount } from "o3-dapi-neo"
+import { getAccount, getBalance, getProvider, getNetworks } from "o3-dapi-neo"
 
 export interface NEOProviderPayload {
-    component: string,
-    method: String,
+    method: string,
     args: any
 }
 
 export interface NEOProviderAPI {
     getAccount?: getAccount
+    getBalance?: getBalance
+    getProvider?: getProvider
+    getNetworks?: getNetworks
 }
 
 export class NEOProvider {
@@ -16,8 +18,8 @@ export class NEOProvider {
     api: NEOProviderAPI
 
     //maybe this will be split into submodules into the future
-    constructor() {
-       
+    constructor(api: NEOProviderAPI) {
+       this.api = api
     }
 
     public async handleRequest(
@@ -25,10 +27,10 @@ export class NEOProvider {
         next: () => Promise<any>,
         end: (error: any, args: any) => Promise<any>
     ) {
-        if (!this.api[payload.component] || !this.api[payload.component][payload.method](payload.args)) {
+        if (!this.api[payload.method] || !this.api[payload.method](payload.args)) {
             return await next();
         } else {
-            const result = await this.api[payload.component][payload.method](payload.args);
+            const result = await this.api[payload.method](payload.args);
             return await end(null, this.afterCall(result))
         }
     }
