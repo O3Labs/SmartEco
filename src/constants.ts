@@ -1,0 +1,6 @@
+export enum EventName {
+    READY = 'READY',
+    ACCOUNT_CHANGED = 'ACCOUNT_CHANGED',
+    CONNECTED = 'CONNECTED',
+    DISCONNECTED = 'DISCONNECTED',
+  }

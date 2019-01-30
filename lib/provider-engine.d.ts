@@ -7,5 +7,6 @@ export declare class NEOProviderEngine {
     start(): void;
     stop(): void;
     sendAsync(method: string, args?: any): Promise<any>;
+    addEventListener(eventName: String, callback: () => void): void;
 }
 //# sourceMappingURL=provider-engine.d.ts.map

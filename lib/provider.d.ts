@@ -1,5 +1,5 @@
 import { NEOProviderEngine } from "./provider-engine";
-import { getAccount, getBalance, getProvider, getNetworks } from "o3-dapi-neo";
+import { getAccount, getBalance, getProvider, getNetworks, getStorage, invokeRead, send, invoke, addEventListener, removeEventListener } from "o3-dapi-neo";
 export interface NEOProviderPayload {
     method: string;
     args: any;
@@ -9,6 +9,12 @@ export interface NEOProviderAPI {
     getBalance?: getBalance;
     getProvider?: getProvider;
     getNetworks?: getNetworks;
+    getStorage?: getStorage;
+    invokeRead?: invokeRead;
+    send?: send;
+    invoke?: invoke;
+    addEventListener?: addEventListener;
+    removeEventListener?: removeEventListener;
 }
 export declare class NEOProvider {
     engine: NEOProviderEngine;

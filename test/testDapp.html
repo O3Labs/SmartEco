@@ -1,0 +1,170 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>O3 Dapp Platform - NEO</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles.css">
+  <!-- <script type="text/javascript" src="../../core/lib/o3-dapi-core.min.js"></script> -->
+  <!-- <script type="text/javascript" src="../lib/o3-dapi-neo.min.js"></script> -->
+  <!-- <script type="text/javascript" src="../../core/build/bundle.js"></script> -->
+  <!-- <script type="text/javascript" src="../build/bundle.js"></script> -->
+
+  <script src="../build/bundle.js"></script>
+</head>
+
+<body>
+
+  <div class="nav">
+    <h4 class="title">O3 Dapp Platform - NEO</h4>
+    <div class='account-container'>
+      <div id="account" class="account"></div>
+      <div id="disconnect" class="disconnect" onclick="disconnect()"></div>
+    </div>
+    <select id="networks" name="networks"></select>
+  </div>
+
+  <div class="content">
+
+    <div class="functions">
+      <h3>Available functions</h3>
+      <div class="scroll-container">
+
+        <div class="function-container">
+          <h5 class="title">getProvider</h5>
+          <p class="text">
+            <p>Returns information about the dAPI provider, including who this provider is, the version of their dAPI, and the NEP that the interface is compatible with.</p>
+          </p>
+          <button type="button" class="btn btn-primary" onclick="getProvider()">Get provider</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">getNetworks</h5>
+          <p class="text">
+            <p>Returns a list of available provider networks</p>
+          </p>
+          <button type="button" class="btn btn-primary" onclick="getNetworks()">Get networks</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">getAccount</h5>
+          <p class="text">
+            <p>Return the Account that is currently connected to the dApp.</p>
+          </p>
+          <button type="button" class="btn btn-primary" onclick="getAccount()">Get account</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">getBalance</h5>
+          <p class="text">
+            <p>Return balance of a specific asset for the given account, or all balances for an account. Also takes multiple entries.</p>
+          </p>
+          <textarea id='balanceInput' name="name">[{"address":"AScKxyXmNtEnTLTvbVhNQyTJmgytxhwSnM","assets":["GAS"]}]</textarea>
+          <button type="button" class="btn btn-primary" onclick="getBalance()">Get Balance</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">getStorage</h5>
+          <p class="text">
+            <p>Reads the raw value in smart contract storage.</p>
+          </p>
+          <p>Script hash:</p>
+          <input id='getStorageScriptHash' type="text" value="c36aee199dbba6c3f439983657558cfb67629599"/>
+          <br/>
+          <p>Key:</p>
+          <input id='getStorageKey' type="text" value="bd097b2fcf70e1fd30a5c3ef51e662feeafeba01"/>
+          <button type="button" class="btn btn-primary" onclick="getStorage()">Get storage</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">invokeRead</h5>
+          <p class="text">
+            <p>Execute a contract invocation in read-only mode.</p>
+          </p>
+          <p>Script hash:</p>
+          <input id='invokeReadScriptHash' type="text" value="c36aee199dbba6c3f439983657558cfb67629599"/>
+          <br/>
+          <p>Operation:</p>
+          <input id='invokeReadOperation' type="text" value="balanceOf"/>
+          <br/>
+          <p>Arguments:</p>
+          <textarea id='invokeReadArgs'>[{"type":"ByteArray","value":"bd097b2fcf70e1fd30a5c3ef51e662feeafeba01"}]</textarea>
+          <button type="button" class="btn btn-primary" onclick="invokeRead()">Invoke read</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">invoke</h5>
+          <p class="text">
+            <p>Execute a contract invocation.</p>
+          </p>
+          <br/>
+          <p>Script hash:</p>
+          <input id='invokeScriptHash' type="text" value="c36aee199dbba6c3f439983657558cfb67629599"/>
+          <br/>
+          <p>Operation:</p>
+          <input id='invokeOperation' type="text" value="transfer"/>
+          <br/>
+          <p>Arguments:</p>
+          <textarea id='invokeArgs'>[{"type":"ByteArray","value":""},{"type":"ByteArray","value":""},{"type":"ByteArray","value":"0100000000000000"}]</textarea>
+          <br/>
+          <p>Attached assets: (Optional)</p>
+          <input id='invokeAttachedAssets' type="text"/>
+          <br/>
+          <p>Fee: (Optional)</p>
+          <input id='invokeFee' type="text" placeholder="eg. 0.00000001"/>
+          <p>Asset Intent Overrides:</p>
+          <textarea id='assetIntentOverrides'></textarea>
+          <br/>
+          <p>Trigger contract verification:</p>
+          <input id='triggerContractVerification' type="checkbox" />
+          <br/>
+          <button type="button" class="btn btn-primary" onclick="invoke()">Invoke</button>
+        </div>
+
+        <div class="function-container">
+          <h5 class="title">send</h5>
+          <p class="text">
+            <p>Invoke a transfer of a specified amount of a given asset from the connected account to another account.</p>
+          </p>
+          <p>From address:</p>
+          <input id='sendFromAddress' type="text" placeholder="eg. AKJQMHma9MA8KK5M8iQg8ASeg3KZLsjwvB"/>
+          <br/>
+          <p>To address:</p>
+          <input id='sendToAddress' type="text" placeholder="eg. AKJQMHma9MA8KK5M8iQg8ASeg3KZLsjwvB"/>
+          <br/>
+          <p>Asset:</p>
+          <input id='sendAsset' type="text" placeholder="eg. SWTH or ab38352559b8b203bde5fddfa0b07d8b2525e132"/>
+          <br/>
+          <p>Amount:</p>
+          <input id='sendAmount' type="text" placeholder="eg. 0.01"/>
+          <br/>
+          <p>Remark: (Optional)</p>
+          <input id='sendRemark' type="text" placeholder="eg. Lunch last Thursday"/>
+          <br/>
+          <p>Fee: (Optional)</p>
+          <input id='sendFee' type="text" placeholder="eg. 0.00000001"/>
+          <br/>
+          <button type="button" class="btn btn-primary" onclick="send()">Send</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="output">
+      <h3>Output</h3>
+      <div class="scroll-container">
+        <div id="loading"><div style="width:100%;height:100%" class="lds-pacman"><div><div></div><div></div><div></div></div><div><div></div><div></div></div></div></div>
+        <div id="result"></div>
+        <div id="error"></div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript" src="./main.js"></script>
+</body>
+</html>
