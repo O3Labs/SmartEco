@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "array-type": [true, "array"],
+    "class-name": true,
+    "comment-format": [true, "check-space"],
+    "curly": true,
+    "eofline": true,
+    "indent": [true, "spaces"],
+    "interface-name": [false, "always-prefix"],
+    "label-position": true,
+    "member-ordering": [true,
+        "public-before-private",
+        "static-before-instance",
+        "variables-before-functions"
+    ],
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-console": [true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-consecutive-blank-lines": true,
+    "no-construct": true,
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-inferrable-types": true,
+    "no-invalid-this": true,
+    "no-namespace": true,
+    "no-reference": true,
+    "no-string-literal": false,
+    "no-switch-case-fall-through": false,
+    "no-trailing-whitespace": true,
+    "no-use-before-declare": false,
+    "no-var-keyword": true,
+    "one-line": [true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "one-variable-per-declaration": true,
+    "semicolon": [true, "always"],
+    "quotemark": [true, "single"],
+    "trailing-comma": [true, {
+      "multiline": "always",
+      "singleline": "never"
+    }],
+    "triple-equals": true,
+    "variable-name": false,
+    "whitespace": [true,
+      "check-branch",
+      "check-decl",
+      "check-module",
+      "check-operator",
+      "check-separator",
+      "check-type",
+      "check-typecast"
+    ]
+  }
+}
