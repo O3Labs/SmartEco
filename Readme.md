@@ -50,7 +50,7 @@ function getAccount() {
 ```
 
 ## Currently Supported Providers
-![O3 Logo](O3.png) 
+![O3 Logo](o3.png) 
 
 **Documentation:** https://docs.o3.network/neoDapi/
 
