@@ -1,55 +1,64 @@
-# NeoDAPI-Provider-Engine
+![GitHub Logo](SmartEco.png)
 
-Ontology-Provider-Engine is a tool for building your own Ontology Provider.
+# What is it?
+Smart Eco is a package that allows you to connect your application to the NEO blockchain without any knowledge about lower level blockchain principles. Your application will no longer need to build its own wallet in order to access all of the power of the NEO blockchain.
 
 ## Concepts
 
 ### What is a Provider?
 
-A Neo Provider abstracts a connection with NEO blockchain network such as
-querying transactions, sending transactions, signing messages, and so on. It is useful for developers who do not want to build out their own wallet functionality, but still want to access features of the NEO blockchain via a trusted wallet.
+For the user a provider, often times known as a wallet, is a software application responsible for managing private keys on their behalf. A user trusts this application to responsibly sign transactions and submit them to the chain.
 
+For a decentralized application developer, a provider abstracts a connection with NEO blockchain network, and takes care of lower level operations like private key management, transaction signatures, and RPC node management.
+
+A developer can connect easily to a user via a provider. The provider can handle authentication so that the user can always feel secure using their preferred wallet.
+
+### NEO DAPI
+The NEO DAPI is a shared interface for providers to adhere to. Any provider in this package will conform to a shared interface as described [in the NEO core project.](https://github.com/neo-project/proposals/pull/69)
+
+This shared interface is what allows you as a Dapp Developer to reach a user, whether he is using the O3 Wallet on Desktop, the NEL Chrome Extension on Chrome, or some other provider.
 
 ### What is the advantage of using Provider?
+If you are just getting started with blockchain development, it is unlikely that you want to build your own wallet. There are numerous security risks, and the wallet itself will likely be signficantly more complicated than the actual application you want to build.
 
-It is useful for developers who do not want to build out their own wallet functionality, but still want to access features of the NEO blockchain via a trusted wallet. This prevents users from having to trust their private keys with dapps or other unknown entities.
+Offloading this work to a trusted wallet provider will greatly speed up development time, reduce security for both the user, and developer, and prevent ecosystem fragmentation where each application needs its own wallet. 
 
-It also prevents ecosystem fragmentation by allowing wallet providers to simply
+## Installation and Usage
 
-Since all communications with Ontology blockchain is abstracted, developers can use
-the same interface when developing Ontology DApp and prevent fragmentation of dApp
-development. 
+smartEco will be available through npm in the future, for now please clone this respository to install.
 
-Also, this trust issue is shifted to Providers, not dApp. So, reliable providers prevent
-DApps from malicious actions such as stealing his/her wallet private keys. For example,
-when a DApp need to sign transaction, it doesn't need the private key of the wallet to sign, 
-instead, it has to request providers to sign the transaction.
-
-
-### What is the NEODAPI-Provider-Engine?
-The NEO DAPI provider
-
-It helps to build oN DAPI provider based on 
-[OEP-6](https://github.com/ontio/OEPs/blob/46bbf73958c40e2f4f6b76ce70216a0f6588e7ef/OEP-6/OEP-6.mediawiki) easily.
-
-
-## Install
-
-Ontology-Provider-Engine is available through npm.
-
-```
-npm install NeoDAPI-Provider-Engine
-```
+The Test Directory contains a simple example web page that show cases the uses of the NEO DAPI. 
 
 ## Usage
 
-```typescript
-import { NEODapiProviderEngine } from 
+```javascript
+engine = new smartEco.NEOProviderEngine()
+engine.start()
+
+//Add Event Listeners
+engine.addEventListener(smartEco.EventName.READY, onReady);
+engine.addEventListener(smartEco.EventName.CONNECTED, data => {});
+engine.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {});
+engine.addEventListener(smartEco.EventName.DISCONNECTED, data => {});
+
+//Calling DAPI Method
+function getAccount() {
+  engine.sendAsync("getNetworks", undefined)
+  .then(handleSuccess)
+  .catch(handleError);
+}
 ```
+
+## Currently Supported Providers
+![GitHub Logo](O3.png) 
+
+**Documentation:** https://docs.o3.network/neoDapi/
+
+**Github:** https://github.com/O3Labs/o3-dapi/tree/master/packages/neo
 
 ## Maintenance and Contribution
 This package is currently maintained as a collaboration between O3 Labs and NEL. If you wish to register as a provider with in this package, please leave an issue in github.
 
 ## License
 
-LGPL
+MIT
