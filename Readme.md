@@ -1,4 +1,4 @@
-![GitHub Logo](SmartEco.png)
+![SmartEco Logo](SmartEco.png)
 
 # What is it?
 Smart Eco is a package that allows you to connect your application to the NEO blockchain without any knowledge about lower level blockchain principles. Your application will no longer need to build its own wallet in order to access all of the power of the NEO blockchain.
@@ -50,7 +50,7 @@ function getAccount() {
 ```
 
 ## Currently Supported Providers
-![GitHub Logo](O3.png) 
+![O3 Logo](O3.png) 
 
 **Documentation:** https://docs.o3.network/neoDapi/
 
