@@ -2,18 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/lodash-es@4.17.1":
-  version "4.17.1"
-  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.1.tgz#56745e5411558362aeca31def918f88f725dd29d"
-  integrity sha512-3EDZjphPfdjnsWvY11ufYImFMPyQJwIH1eFYRgWQsjOctce06fmNgVf5sfvXBRiaS1o0X50bAln1lfWs8ZO3BA==
-  dependencies:
-    "@types/lodash" "*"
-
-"@types/lodash@*":
-  version "4.14.120"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.120.tgz#cf265d06f6c7a710db087ed07523ab8c1a24047b"
-  integrity sha512-jQ21kQ120mo+IrDs1nFNVm/AsdFxIx2+vZ347DbogHJPd/JzKNMOqU6HCYin1W6v8l5R9XSO2/e9cxmn7HAnVw==
-
 "@webassemblyjs/ast@1.7.8":
   version "1.7.8"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.8.tgz#f31f480debeef957f01b623f27eabc695fa4fe8f"
@@ -334,13 +322,6 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base-x@^3.0.2:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.5.tgz#d3ada59afed05b921ab581ec3112e6444ba0795a"
-  integrity sha512-C3picSgzPSLE+jW3tcBzJoGwitOtazb5B+5YmAxZm2ybmTi9LNgAtDO/jjVEBZwHoXmDBZ9m/IELj3elJVRBcA==
-  dependencies:
-    safe-buffer "^5.0.1"
-
 base64-arraybuffer@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz#73926771923b5a19747ad666aa5cd4bf9c6e9ce8"
@@ -437,7 +418,7 @@ browserify-aes@^1.0.0, browserify-aes@^1.0.4:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-browserify-cipher@^1.0.0:
+browserify-cipher@^1.0.0, browserify-cipher@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/browserify-cipher/-/browserify-cipher-1.0.1.tgz#8d6474c1b870bfdabcd3bcfcc1934a10e94f15f0"
   integrity sha512-sPhkz0ARKbf4rRQt2hTpAHqn47X3llLkUGn+xEJzLjwY8LRs2p0v7ljvI5EyoRO/mexrNunNECisZs+gw2zz1w==
@@ -483,13 +464,6 @@ browserify-zlib@^0.2.0:
   integrity sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==
   dependencies:
     pako "~1.0.5"
-
-bs58@~4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/bs58/-/bs58-4.0.1.tgz#be161e76c354f6f788ae4071f63f34e8c4f0a42a"
-  integrity sha1-vhYedsNU9veIrkBx9j806MTwpCo=
-  dependencies:
-    base-x "^3.0.2"
 
 buffer-from@^1.0.0:
   version "1.1.1"
@@ -752,7 +726,7 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-create-ecdh@^4.0.0:
+create-ecdh@^4.0.0, create-ecdh@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"
   integrity sha512-GbEHQPMOswGpKXM9kCWVrremUcBmjteUaQ01T9rkKCPDXfUHX0IoP9LpHYo2NPFampa4e+/pFDc3jQdxrxQLaw==
@@ -810,11 +784,6 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
-
-crypto-js@~3.1.9-1:
-  version "3.1.9-1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
-  integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
 cyclist@~0.2.2:
   version "0.2.2"
@@ -1994,21 +1963,20 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-o3-dapi-core@0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/o3-dapi-core/-/o3-dapi-core-0.0.10.tgz#8bc8e00621ab96aafe9b753f8e7a4e1cd439ad8e"
-  integrity sha512-s3xXYKRZXRqQ/z9M9OzQHV9HU05gEv9O4p50dXkeQyjxRztR1cvB1l8rvdWu8K0IlNtU3tLtW9aeuW8VWCFSyg==
+o3-dapi-core@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/o3-dapi-core/-/o3-dapi-core-0.1.0.tgz#b2c09165fa953603065ec66ecf99ecf5d9776c3c"
+  integrity sha512-EipahlgyTbCPcZeyZXqX1zssCMvYd4JEc6aIJR3MyoPHw5O8aKsCLjQrL1S6HNoACYpqBCsOwwhPVxF+zaQYxA==
   dependencies:
-    "@types/lodash-es" "4.17.1"
-    bs58 "~4.0.1"
-    crypto-js "~3.1.9-1"
+    browserify-cipher "^1.0.1"
+    create-ecdh "^4.0.3"
     lodash-es "4.17.11"
     socket.io-client "~2.2.0"
 
-o3-dapi-neo@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/o3-dapi-neo/-/o3-dapi-neo-0.0.14.tgz#7d25501d23ddcfffd105996d04a33099502e0e96"
-  integrity sha512-dOxPlEeArH3Q3Lz0Qn+olpFkLNxrbUf1HIsjTV6t+Dd95/YaQPECRlhx6SpZJ6Kz5yNpAQR75KtdTP3OMubfhQ==
+o3-dapi-neo@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/o3-dapi-neo/-/o3-dapi-neo-0.1.0.tgz#1eec05eecf82eec82b2aa6df2bb2169f14feb93c"
+  integrity sha512-JHyPpeav+NQHMhGOrBvuYBq5k88nHSRX5Fa9HX+xoIgUbmQA+pZzANQ+lrmyRKyDDuiJ6DkiwrPvByXMc1acTA==
 
 object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
