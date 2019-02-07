@@ -39,11 +39,13 @@ function clearText() {
 function handleSuccess(data) {
   stopLoading();
   const formatted = syntaxHighlight(data);
+  errorEle.innerHTML = ""
   resultEle.innerHTML = formatted;
 }
 
 function handleError(error) {
   stopLoading();
+  resultEle.innerHTML = ""
   errorEle.innerHTML = syntaxHighlight(error);
 }
 
@@ -65,20 +67,20 @@ function isReady() {
 }
 
 function getProvider() {
-  engine.sendAsync("getProvider", undefined)
+  smartEcoRouter.getProvider()
   .then(handleSuccess)
   .catch(handleError);
 }
 
 function getNetworks() {
-  engine.sendAsync("getNetworks", undefined)
+  smartEcoRouter.getAccount()
   .then(handleSuccess)
   .catch(handleError);
 }
 
 function getAccount() {
   startLoading();
-  engine.sendAsync("getAccount", undefined)
+  smartEcoRouter.getAccount()
   .then(handleSuccess)
   .catch(handleError);
 }
@@ -86,7 +88,7 @@ function getAccount() {
 function getBalance() {
   try {
     startLoading();
-    engine.sendAsync("getBalance",{
+    smartEcoRouter.getBalance({
       params: balanceInputEle.value && JSON.parse(balanceInputEle.value),
       network: networksEle.value,
     })
@@ -99,7 +101,7 @@ function getBalance() {
 
 function getStorage() {
   startLoading();
-  engine.sendAsync("getStorage", {
+  smartEcoRouter.getStorage({
     scriptHash: getStorageScriptHashEle.value,
     key: getStorageKeyEle.value,
     network: networksEle.value,
@@ -111,7 +113,7 @@ function getStorage() {
 function invokeRead() {
   try {
     startLoading();
-    engine.sendAsync("invokeRead", {
+    smartEcoRouter.invokeRead({
       scriptHash: invokeReadScriptHashEle.value,
       operation: invokeReadOperationEle.value,
       args: invokeReadArgsEle.value && JSON.parse(invokeReadArgsEle.value),
@@ -127,7 +129,7 @@ function invokeRead() {
 function invoke() {
   try {
     startLoading();
-    engine.sendAsync.invoke("invoke", {
+    smartEcoRouter.invoke({
       scriptHash: invokeScriptHashEle.value,
       operation: invokeOperationEle.value,
       args: invokeArgsEle.value && JSON.parse(invokeArgsEle.value),
@@ -146,7 +148,7 @@ function invoke() {
 
 function send() {
   startLoading();
-  engine.sendAsync("send", {
+  smartEcoRouter.send({
     fromAddress: sendFromAddressEle.value,
     toAddress: sendToAddressEle.value,
     asset: sendAssetEle.value,
@@ -160,7 +162,7 @@ function send() {
 }
 
 function disconnect() {
-  o3dapi.NEO.disconnect()
+  smartEcoRouter.disconnect()
   .then(data => {
     accountEle.innerHTML = '';
     disconnectEle.innerHTML = '';
@@ -191,30 +193,30 @@ function syntaxHighlight(json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
+debugger
+smartEcoRouter = new smartEco.SmartEcoRouter()
+smartEcoRouter.start()
 
-engine = new smartEco.NEOProviderEngine()
-engine.start()
+smartEcoRouter.addEventListener(smartEco.EventName.READY, onReady);
 
-engine.addEventListener(smartEco.EventName.READY, onReady);
-
-engine.addEventListener(smartEco.EventName.CONNECTED, data => {
+smartEcoRouter.addEventListener(smartEco.EventName.CONNECTED, data => {
   accountEle.innerHTML = `Connected Account: ${data.address}`;
   disconnectEle.innerHTML = 'disconnect';
 });
 
-engine.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {
+smartEcoRouter.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {
   accountEle.innerHTML = `Connected Account: ${data.address}`;
   disconnectEle.innerHTML = 'disconnect';
 });
 
-engine.addEventListener(smartEco.EventName.DISCONNECTED, data => {
+smartEcoRouter.addEventListener(smartEco.EventName.DISCONNECTED, data => {
   accountEle.innerHTML = '';
   disconnectEle.innerHTML = '';
   clearText();
 });
 
 function onReady() {
-  engine.sendAsync("getNetworks")
+  smartEcoRouter.getNetworks()
   .then(({networks, defaultNetwork}) => {
     networks.forEach(network => {
       const option = document.createElement('option');

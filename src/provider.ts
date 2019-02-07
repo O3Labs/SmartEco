@@ -1,5 +1,5 @@
-import { NEOProviderEngine } from "./provider-engine";
-import { getAccount, getBalance, getProvider, getNetworks, getStorage, invokeRead, send, invoke, addEventListener, removeEventListener} from "o3-dapi-neo"
+import { SmartEcoRouter } from "./provider-engine";
+import { getAccount, getBalance, getProvider, getNetworks, getStorage, invokeRead, send, invoke, disconnect, addEventListener, removeEventListener} from "o3-dapi-neo"
 
 export interface NEOProviderPayload {
     method: string,
@@ -8,12 +8,14 @@ export interface NEOProviderPayload {
 
 export interface NEOProviderAPI {
     //read only methods
-    getAccount?: getAccount
-    getBalance?: getBalance
     getProvider?: getProvider
     getNetworks?: getNetworks
+    disconnect?: disconnect
+    getAccount?: getAccount
+    getBalance?: getBalance
     getStorage?: getStorage
     invokeRead?: invokeRead
+    
 
     //write methods
     send?: send
@@ -25,7 +27,7 @@ export interface NEOProviderAPI {
 }
 
 export class NEOProvider {
-    engine: NEOProviderEngine
+    engine: SmartEcoRouter
     api: NEOProviderAPI
 
     //maybe this will be split into submodules into the future
@@ -43,7 +45,6 @@ export class NEOProvider {
         } else {
             console.log(this.api)
             console.log(payload)
-            debugger
             const result = await this.api[payload.method](payload.args);
             return await end(null, this.afterCall(result))
         }

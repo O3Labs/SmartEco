@@ -1,7 +1,7 @@
-import { NEOProviderEngine } from "./provider-engine";
+import { SmartEcoRouter } from "./provider-engine";
 import { EventName } from "./constants";
 declare const smartEco: {
-    NEOProviderEngine: typeof NEOProviderEngine;
+    SmartEcoRouter: typeof SmartEcoRouter;
     EventName: typeof EventName;
 };
 export default smartEco;

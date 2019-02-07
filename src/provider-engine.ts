@@ -2,7 +2,7 @@ import { NEOProvider, NEOProviderPayload, NEOProviderAPI } from "./provider";
 import o3dapi from 'o3-dapi-core';
 import O3dapiNeo from "o3-dapi-neo";
 
-export class NEOProviderEngine {
+export class SmartEcoRouter {
     protected _working: boolean;
     protected _providers: any[] = [];
     
@@ -11,10 +11,11 @@ export class NEOProviderEngine {
     constructor() {
         o3dapi.initPlugins([O3dapiNeo]);
         const o3API: NEOProviderAPI = {
-            getAccount: o3dapi.NEO.getAccount,
-            getBalance: o3dapi.NEO.getBalance,
             getNetworks: o3dapi.NEO.getNetworks,
             getProvider: o3dapi.NEO.getProvider,
+            disconnect: o3dapi.NEO.disconnect,
+            getAccount: o3dapi.NEO.getAccount,
+            getBalance: o3dapi.NEO.getBalance,
             getStorage: o3dapi.NEO.getStorage,
             invokeRead: o3dapi.NEO.invokeRead,
 
@@ -38,7 +39,41 @@ export class NEOProviderEngine {
         this._working = false;
     }
 
-    public async sendAsync(method: string, args? :any): Promise<any> {
+    //read methods
+    public async getProvider(): Promise<any> {
+        return this.sendAsync("getProvider")
+    }
+
+    public async getNetworks(): Promise<any>{
+        return this.sendAsync("getNetworks")
+    }
+
+    public async getAccount(args?: any): Promise<any> {
+        return this.sendAsync("getAccount", args)
+    }
+
+    public async getBalance(args?: any): Promise<any> {
+        return this.sendAsync("getBalance", args)
+    }
+
+    public async getStorage(args?: any): Promise<any> {
+        return this.sendAsync("getStorage", args)
+    }
+
+    public async invokeRead(args?: any): Promise<any> {
+        return this.sendAsync("invokeRead", args)
+    }
+
+    //write methods
+    public async send(args?: any): Promise<any> {
+        return this.sendAsync("send", args)
+    }
+
+    public async invoke(args?: any): Promise<any> {
+        return this.sendAsync("promise", args)
+    }
+
+    private async sendAsync(method: string, args? :any): Promise<any> {
         if (!this._working) {
             return Promise.reject("Provider engine is not currently active");
         }

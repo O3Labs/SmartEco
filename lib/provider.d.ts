@@ -1,14 +1,15 @@
-import { NEOProviderEngine } from "./provider-engine";
-import { getAccount, getBalance, getProvider, getNetworks, getStorage, invokeRead, send, invoke, addEventListener, removeEventListener } from "o3-dapi-neo";
+import { SmartEcoRouter } from "./provider-engine";
+import { getAccount, getBalance, getProvider, getNetworks, getStorage, invokeRead, send, invoke, disconnect, addEventListener, removeEventListener } from "o3-dapi-neo";
 export interface NEOProviderPayload {
     method: string;
     args: any;
 }
 export interface NEOProviderAPI {
-    getAccount?: getAccount;
-    getBalance?: getBalance;
     getProvider?: getProvider;
     getNetworks?: getNetworks;
+    disconnect?: disconnect;
+    getAccount?: getAccount;
+    getBalance?: getBalance;
     getStorage?: getStorage;
     invokeRead?: invokeRead;
     send?: send;
@@ -17,7 +18,7 @@ export interface NEOProviderAPI {
     removeEventListener?: removeEventListener;
 }
 export declare class NEOProvider {
-    engine: NEOProviderEngine;
+    engine: SmartEcoRouter;
     api: NEOProviderAPI;
     constructor(api: NEOProviderAPI);
     handleRequest(payload: NEOProviderPayload, next: () => Promise<any>, end: (error: any, args: any) => Promise<any>): Promise<any>;
