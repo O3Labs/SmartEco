@@ -239,7 +239,7 @@ At this point you are considered to be in a **connected** state with the provide
 
 You can perform many functions in the connected state. First it will allow you to query all publicly available info associated with this address on the blockchain. For instance, you could check a users balances of NEO, GAS, or various NEP-5 tokens. You could also find all of their stored NNS (NEO Name Service) aliases. Thus we can have a glimpse at the power of blockchain connectivity and smart contracts. It moves data queries away from private data silos, and into a publicly accessible shared data space (the blockchain).
 
-However this identity doesn't just have to be used to query already existing public info. If you're feeling more adventurous, then you could this address as the primary key in your database for users. Since each NEO is guaranteed to be unique, you could use this to replace the traditional email/password authentication on your website. Or you could even create your own smart contracts, and add data back into the shared data space.
+However this identity doesn't just have to be used to query already existing public info. If you're feeling more adventurous, then you could this address as the primary key in your database for users. Since each NEO Address is guaranteed to be unique, you could use this to replace the traditional email/password authentication on your website. Or you could even create your own smart contracts, and add data back into the shared data space.
 
 So in summary, we've described how to a connect your application to SmartEco compatible provider, and examined a few use cases including using it as an authentication mechanism as well as a public id to query public blochchain info, as well as using it as the primary identifier in your own database. 
 
@@ -344,13 +344,13 @@ As you can see your decentralized application will first request to create a sen
 }
 ```
 
-The user should then be asked to authorize this transaction via a visual confirmation dialog from their wallet. If the user accepts this transaction, then the provider will be responsible for parsing the JSON and generating the raw hex code that represents thae transaction. It will then relay this transaction to the NEO network via an RPC node. If the transction is successful, then the a transaction id will be returned to your application as a receipt.
+The user should then be asked to authorize this transaction via a visual confirmation dialog from their wallet. If the user accepts this transaction, then the provider will be responsible for parsing the JSON and generating the raw hex code that represents the transaction. It will then relay this transaction to the NEO network via an RPC node. If the transction is successful, then the a transaction id will be returned to your application as a receipt.
 
 <aside class="notice">
 After receiving the transaction ID from the wallet, it can handle this in many ways, to verify that the transaction was indeed successfully submitted.
 </aside>
 
-1. **Trust the provider implementation** -> If you trust the wallet provider to relay the transaction then you can simply confirm that the transaction has indeed in the mempool, and allow for a zero confirmation transaction
+1. **Trust the provider implementation** -> If you trust the wallet provider to relay the transaction then you can simply confirm that the transaction has indeed been included in the mempool, and allow for a zero confirmation transaction
 2. **Compare transaction ID's** -> If you do not trust the provider implementation, then you can generate the transaction ID from your end, and then confirm the end result with the wallets implementation. This will guarantee that transaction that ended up in the mempool is what you expect to be
 3. **Wait for one block confirmation** -> Since NEO has one block finality, you can wait for the transaction to be processed from the mempool, and actually put into the block. From there you can detect if the expected result is correct
 </aside>
