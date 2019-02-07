@@ -32,18 +32,18 @@ The Test Directory contains a simple example web page that show cases the uses o
 ## Usage
 
 ```javascript
-engine = new smartEco.NEOProviderEngine()
-engine.start()
+smartEcoRouter = new smartEco.SmartEcoRouter()
+smartEcoRouter.start()
 
 //Add Event Listeners
-engine.addEventListener(smartEco.EventName.READY, onReady);
-engine.addEventListener(smartEco.EventName.CONNECTED, data => {});
-engine.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {});
-engine.addEventListener(smartEco.EventName.DISCONNECTED, data => {});
+smartEcoRouter.addEventListener(smartEco.EventName.READY, onReady);
+smartEcoRouter.addEventListener(smartEco.EventName.CONNECTED, data => {});
+smartEcoRouter.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {});
+smartEcoRouter.addEventListener(smartEco.EventName.DISCONNECTED, data => {});
 
 //Calling DAPI Method
-function getAccount() {
-  engine.sendAsync("getNetworks", undefined)
+function getNetworks() {
+  smartEcoRouter.getNetworks()
   .then(handleSuccess)
   .catch(handleError);
 }
