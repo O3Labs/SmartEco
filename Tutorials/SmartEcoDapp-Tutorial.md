@@ -79,10 +79,20 @@ Lets now look at how connect to the wallet using the decentralized API. First le
 
 ![Connection Flow](connection_flow.png "Connection Flow")
 
-As you can see when the user first opens your DAPP via the browser you must check to see if the user is in a SmartEco Evnironment. If the user's environment is not SmartEco compatible, then it will be impossible for you to access features like the user account info. If the user is in a SmartEco compatible environment then you can call the method as follows
+As you can see when the user first opens your DAPP via the browser you must check to see if the user is in a SmartEco Evnironment. If the user's environment is not SmartEco compatible, then it will be impossible for you to access features like the user account info. 
+
+After you have installed the SmartEco Package via npm and included it in your project you will need to declare an instance of the SmartEcoRouter.
+
+``` javascript
+smartEcoRouter = new smartEco.SmartEcoRouter()
+smartEcoRouter.start()
+```
+
+This object will handle all of your requests and guide them to the appropriate provider. If the user is in a SmartEco Environment then you can call the method as follows.
+
 
 ``` typescript
-o3dapi.NEO.getProvider()
+smartEcoRouter.getProvider()
 .then((provider: Provider) => {
   const {
     name,
@@ -146,7 +156,7 @@ It is highly reccomended for privacy and security reasons that all provider impl
 Now that you have confirmed that you are in a SmartEco compatible environment, you can retrieve the user account details as follows.
 
 ``` typescript
-o3dapi.NEO.getAccount()
+smartEcoRouter.getAccount()
 .then((account: Account) => {
   const {
     address,
@@ -202,7 +212,7 @@ However the complete list of available read methods is
  You'll note that the balance query flow in general is much simpler than the initial connection flow. Since the user has already granted for the dapp to view their public address, querying read only info does not require any authentication from the user. 
 
 ``` typescript
-o3dapi.NEO.getBalance({
+smartEcoRouter.getBalance({
   "params": {
     "address": "AeysVbKWiLSuSDhg7DTzUdDyYYKfgjojru",
     "assets": ["NKN"]
@@ -298,7 +308,7 @@ After receiving the transaction ID from the wallet, it can handle this in many w
 
 A code example of the input described above can be found below
 ``` typescript
-o3dapi.NEO.send({
+smartEcoRouter.send({
   "fromAddress": 'ATaWxfUAiBcQixNPq6TvKHEHPQum9bx79d',
   "toAddress": 'ATaWxfUAiBcQixNPq6TvKHEHPQum9bx79d',
   "asset": 'GAS',
@@ -356,7 +366,7 @@ We'll now go over the final write method which is the most flexible and powerful
 As an example, let's consider a simple contract that stores key value pairs. Here is an example of a code snippet to invoke the contract.
 
 ```typescript
-o3dapi.NEO.invoke({
+smartEcoRouter.invoke({
   scriptHash: '505663a29d83663a838eee091249abd167e928f5',
   operation: 'storeData',
   arguments: [
@@ -418,7 +428,7 @@ And there we have it. we have a complete guide on how to interact with most of t
 Events will be emitted from the wallet when certain changes occcur in the user environment. Below we can see a simple example where the user changes the account in their provider.
 
 ``` javascript
-o3dapi.NEO.addEventListener(o3dapi.NEO.Constants.EventName.ACCOUNT_CHANGED, data => {
+smartEcoRouter.addEventListener(smartEco.EventName.ACCOUNT_CHANGED, data => {
   console.log(data.address)
 });
 ```
