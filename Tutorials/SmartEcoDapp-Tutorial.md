@@ -1,8 +1,20 @@
-# Table of Contents
-1. [Setting Up Your Developer Environment](#SettingUpYourDeveloperEnvironment)
-2. [Connect To a Wallet](#ConnectToAWallet)
-3. [Using the Read Methods (Querying User Balances)](#third-example)
-4. [Using the Write Methods (Requesting a user transaction)]()
+# A Comprehensive Guide to SmartEco
+- [Setting Up Your Developer Environment](#Setting%20Up%20Your%20Developer%20Environment)
+- [SmartEco Environment Architecture](#SmartEco%20Environment%20Architecture)
+  * [Examples of HAPPS](#Examples%20of%20Happs)
+  * [SmartEco Advantages](#SmartEco%20Advantages)
+- [Connect To a Wallet](#Connect%20to%20a%20Wallet)
+  * [Get Provider Details](#Get%20Provider%20Details)
+  * [Get Available Networks](#Get%20Available%20Networks)
+  * [Get User Account Information](#Get%20User%20Account%20Information)
+- [Using the Read Methods](#Using%20the%20Read%20Methods)
+  * [Querying Account Balances](#Querying%20Account%20Balances)
+  * [Querying Smart Contract Storage](#Querying%20Smart%20Contract%20Storage)
+- [Using the Write Methods](#Using%20the%20Write%20Methods)
+  * [Requesting a User Transaction](#Requesting%20a%20User%20Transaction)
+  * [Invoking a Smart Contract](#Invoking%20a%20Smart%20Contract)
+- [Listening for Events](#Listening%20For%20Events)
+- [Conclusion](#Conclusion)
 
 ## Setting Up Your Developer Environment
 For your developer environment you will need to download a SmartEco compatible client. A complete list of SmartEco compatible clients [can be found here.](https://github.com/O3Labs/SmartEco#currently-supported-providers)
@@ -62,7 +74,7 @@ We define **HAPPS** as applications that use a mixture of decentralized architec
 HAPPS fundamentally differ from DAPPS in that there is no expectation or need for all or even the majority of infrastructure to run in a completely decentralized manner. Rather they should use it where it clearly improves user security, experience, privacy or can rely on shared resources to reduce development time or costs.
 
 
-## SmartEco Advantages
+### SmartEco Advantages
 
 With this architecture, an application which wishes to connect to the blockchain no longer needs to build out its own dedicated wallet infrastructure. Wallet infrastructure can be costly to build out, and requires a large amount of trust from the user if they are to be trusted with the private key. The SmartEco architecture allows for a clear seperation of concerns between HAPPS and providers.
 
@@ -70,7 +82,7 @@ With this architecture, an application which wishes to connect to the blockchain
 
 With this seperation of concerns a user can choose which wallet to trust with their private key. They no longer have to trust the private key with each individual decentralized application. It also greatly lowers the development time for the application developer. Instead of building up their own raw transactions, a developer can specify contract invocations via simple json formats. Now with a basic understanding of SmartEco Architecture, you are ready to get started and connect your HAPP to a wallet.
 
-## Connect To a Wallet
+## Connect to a Wallet
 As a decentralized application the first things that you might like to do is connect to a user wallet. By connecting to a user wallet you would be able to access a users publicly identifiable information using their address. You can think of this wallet connection as a decentralized version of OAuth connection. You will access authenticate a user using their credentials on the publicly available blockchain as opposed to a closed source provider like Facebook.
 
 ![Decentralized Auth](decentralized_auth.png "Decentralized Auth")
@@ -89,6 +101,8 @@ smartEcoRouter.start()
 ```
 
 This object will handle all of your requests and guide them to the appropriate provider. If the user is in a SmartEco Environment then you can call the method as follows.
+
+### Get Provider Details
 
 
 ``` typescript
@@ -147,13 +161,48 @@ This will give you basic info about the provider environment that you are operat
 It's important that each provider is responsible for their own implementation of the NEO dAPI. This means that there they may be discrepancies between behaviors in different provider environments. Because of this, please reference the provider documentation when working with a particular provider. For instance if O3 was the provider environment, then you could reference https://docs.o3.network/neoDapi/ for complete implementation detail.
 </aside>
 
-After you have confirmed that you are in a SmartEco compatible environment, you can request account details which will give you identity information (user address) about the user accessing your decentralized application.
+### Get Available Networks
+After you have confirmed that you are in a SmartEco environment, its is highly reccommended that you check which networks are available for you to use. The main NEO network is typically known as the  ```MainNet```, but there is also a publicly available ```TestNet``` which allows you test various operations without risking real funds on the main network. Additionally, you may have the ability to connect to a ```PrivateNet```. This network is generally not publicly available and may be only running locally on your machine. This could be useful if you are exploring core changes to the NEO Protocol.
+
+The client is responsible for providing info on which networks are available for you to connect to. This is done for security purposes, since a user may only want a DAPP to interact with the Testnet, and prevent malicious actors from sending transactions on the MainNet without user consent.
+
+Use the following code to query which networks are available for you to interact with in the SmartEco Environment.
+
+``` typescript
+smartEcoRouter.getNetworks()
+.then(response => {
+  const {
+    networks,
+    defaultNetwork,
+  } = response.networks;
+
+  console.log('Networks: ' + networks);
+  // eg. ["MainNet", "TestNet", "PrivateNet"]
+
+  console.log('Default network: ' + defaultNetwork);
+  // eg. "MainNet"
+})
+.catch(({type: string, description: string, data: any}) => {
+  switch(type) {
+    case NO_PROVIDER:
+      console.log('No provider available.');
+      break;
+    case CONNECTION_DENIED:
+      console.log('The user rejected the request to connect with your dApp');
+      break;
+  }
+});
+```
+
+### Get User Account Information
+
+Now that you have confirmed the details about the SmartEco Environment that you are operating you can request account details about the user accessing your decentralized application. This will provide you with some basic information about the **user identity**, namely, the user's address.
 
 <aside class="warning">
-It is highly reccomended for privacy and security reasons that all provider implementations require user consent before providing this information back to the DAPP.
+It is highly reccomended for privacy and security reasons that all provider implementations require user consent before relaying this information back to the DAPP.
 </aside>
 
-Now that you have confirmed that you are in a SmartEco compatible environment, you can retrieve the user account details as follows.
+Request the user credentials as follows.
 
 ``` typescript
 smartEcoRouter.getAccount()
@@ -176,10 +225,9 @@ smartEcoRouter.getAccount()
       break;
   }
 });
+
 ```
-
-
-If a user authenticated your decentralized application to know their address you will receive a json object that looks like this
+If a user authenticated your decentralized application to know their account details you will receive a json object that looks like this
 
 ``` json
 {
@@ -187,25 +235,26 @@ If a user authenticated your decentralized application to know their address you
   "label": "My Spending Wallet"
 }
 ```
-At this point you are considered to be in a "connected" state with the wallet.
+At this point you are considered to be in a **connected** state with the provider. In the connected state you have a direct connection between the user, the NEO blockchain, and your application.
 
-You can use this address for many purposes. First it will allow you to query all publicly available info associated with this address on the blockchain. For instance,you could check a users balances of NEO, GAS, or various NEP-5 tokens. You could also find all of their stored NNS (NEO Name Service) aliases, because all of these are located in the publicly accessible areas of the blockchain.
+You can perform many functions in the connected state. First it will allow you to query all publicly available info associated with this address on the blockchain. For instance, you could check a users balances of NEO, GAS, or various NEP-5 tokens. You could also find all of their stored NNS (NEO Name Service) aliases. Thus we can have a glimpse at the power of blockchain connectivity and smart contracts. It moves data queries away from private data silos, and into a publicly accessible shared data space (the blockchain).
 
-If you're feeling more adventurous, then you could this address as the primary key in your database for users. Since each NEO is guaranteed to be unique, you could use this to replace the traditional email/password authentication on your website.
+However this identity doesn't just have to be used to query already existing public info. If you're feeling more adventurous, then you could this address as the primary key in your database for users. Since each NEO is guaranteed to be unique, you could use this to replace the traditional email/password authentication on your website. Or you could even create your own smart contracts, and add data back into the shared data space.
 
-So in summary, we've described how to a connect your application to SmartEco compatible provider, and how it compares to at traditional oAuth authentication system.
+So in summary, we've described how to a connect your application to SmartEco compatible provider, and examined a few use cases including using it as an authentication mechanism as well as a public id to query public blochchain info, as well as using it as the primary identifier in your own database. 
 
-In the next section we will cover how to access the read methods provided by the dAPI interface.
+In the next section we will cover how to access the read methods provided by SmartEco, to get some of the publicly identifiable info that we described earler..
 
-## Using the Read Methods (Querying User Balances)
-Read methods allow you to query blockchain info that is publicly available. It is reccomended that you first perform the connection step before attemption invoke the read methods. In this example, we will focus on the specific example of querying examples.
+## Using the Read Methods
+Read methods allow you to query blockchain info that is publicly available. You will first need to go through the connection process before invoking the read methods. In this example, we will focus on the specific example of querying balances.
 
 However the complete list of available read methods is
-* **getProvider** -> get info about the provider or user environment
-* **getNetworks** -> get networks available for write methods 
 * **getBalances** -> get balances for NEO/GAS and NEP5 tokens
 * **getStorage** -> get value for key in smart contract storage
 * **invokeRead** -> perform a contract invoke in read only mode, this will let you to see the results of an invocation without actually publishing those results on chain
+
+### Querying Account Balances
+One of the key features of NEO and other blockchains is digital assets. Digital assets are assets on chain that are represented via smart contract. They can be easily transferred amongst other within the blockchain. Thus if you want to get more information about a user's balances you can use SmartEco to query for that info like below.
 
  ![Balance Query Flow](balance_query_flow.png "balance query flow")
 
@@ -237,14 +286,11 @@ smartEcoRouter.getBalance({
     case NO_PROVIDER:
       console.log('No provider available.');
       break;
-    case CONNECTION_DENIED:
-      console.log('The user rejected the request to connect with your dApp');
-      break;
   }
 });
 ```
 
- Here is an example of a typical json input from the DAPP, and an output returned from the wallet.
+ Here is an example of a typical json input from the application, and an output returned from the wallet.
 
 ``` json
  //input
@@ -268,16 +314,19 @@ smartEcoRouter.getBalance({
 }
 ```
 
-Note that it is required to specify a network in order to access most read methods. The list of available networks can be found using the **getNetworks** command in the dAPI. 
+Note that it is required to specify a network in order to access most read methods. The list of available networks can be found using the **getNetworks** command as described above. 
 
 It's as simple as that, if the user has already authenticated your decentralized application, then read only methods can be called at will. It's important to note that if your application relies heavily on read only methods, then it might be a good idea to offload some of that infrastructure on your own application. 
 
-This should generally improve latency, however if you're just getting started or only need to make use of a few read methods, then the provided dAPI methods are a quick way to access the blockchain without building up your own infrastructure. 
+This should generally improve latency, however if you're just getting started or only need to make use of a few read methods, then the provided SmartEco methods are a quick way to access the blockchain without building up your own infrastructure. 
 
 In this next section we will be examining how to use write methods. Write methods will allow you to alter the state of the blockchain on behalf of the user.
 
-## Using the Write Methods (Requesting a user transaction)
+## Using the Write Methods
+
 Write methods are those that allow you to alter the state of the blockchain on behalf of the user, there are two types of write methods. Sending a transaction and invoking a smart contract. Let's first look at the flow diagram for sending
+
+### Requesting a User Transaction
 
 ![Send Flow](send_flow.png "Send Flow")
 
@@ -295,7 +344,7 @@ As you can see your decentralized application will first request to create a sen
 }
 ```
 
-The user should then be asked to authorize this transaction via a visual confirmation dialog from their wallet. If the user chooses to authorize this transaction on their wallet. If the user accepts this transaction, then the provider will be responsible for parsing the JSON and generating the raw hex code that represents thae transaction. It will then relay this transaction to the NEO network via an RPC node. If the transction is successful, then the a transaction id will be returned to the decentralized application as a receipt.
+The user should then be asked to authorize this transaction via a visual confirmation dialog from their wallet. If the user accepts this transaction, then the provider will be responsible for parsing the JSON and generating the raw hex code that represents thae transaction. It will then relay this transaction to the NEO network via an RPC node. If the transction is successful, then the a transaction id will be returned to your application as a receipt.
 
 <aside class="notice">
 After receiving the transaction ID from the wallet, it can handle this in many ways, to verify that the transaction was indeed successfully submitted.
@@ -358,8 +407,8 @@ Notice that you also receive the nodeURL of where this transaction was submitted
 In summary we have now described the basic process for requesting transaction sends on behalf of the user we are ready, we can see the formation of a decentralized architecture take place. Sending assets is the most basic way to the alter the state of the blockchain. However we will now expand it into generic contract invokes. This will allow you to call any method, on any public smart contract on behalf of the user in a secure way. 
 
 
-## Using the Write Methods (Invoking a Smart Contract)
-We'll now go over the final write method which is the most flexible and powerful write methods. This will allow for general smart contract invocations. The overall flow of invoking a smart contract follows the same process as the send flow. 
+### Invoking a Smart Contract
+We'll now go over the final write method which is the most flexible and powerful write methods This will allow for general smart contract invocations. The overall flow of invoking a smart contract follows the same process as the send flow. 
 
 ![Contract Invoke Flow](contract_invoke_flow.png "Contract Invoke Flow")
 
@@ -445,4 +494,4 @@ However the complete list of available read methods is
 * **NETWORK_CHANGED** -> The active network for  requests may be submuttted has changed.
 
 ## Conclusion
-There we have it. You should now have all the tools you need in order to build and create dapps by interacting with a wallet provider
+There we have it. You should now have all the tools you need in order to build and create dapps by interacting with a wallet provider.
