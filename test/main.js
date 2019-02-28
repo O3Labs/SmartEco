@@ -73,7 +73,7 @@ function getProvider() {
 }
 
 function getNetworks() {
-  smartEcoRouter.getAccount()
+  smartEcoRouter.getNetworks()
   .then(handleSuccess)
   .catch(handleError);
 }
@@ -193,7 +193,7 @@ function syntaxHighlight(json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
-debugger
+
 smartEcoRouter = new smartEco.SmartEcoRouter()
 smartEcoRouter.start()
 
