@@ -70,7 +70,7 @@ export class SmartEcoRouter {
     }
 
     public async invoke(args?: any): Promise<any> {
-        return this.sendAsync("promise", args)
+        return this.sendAsync("invoke", args)
     }
 
     private async sendAsync(method: string, args? :any): Promise<any> {
