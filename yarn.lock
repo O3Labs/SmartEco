@@ -1702,9 +1702,9 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-o3-dapi-core@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/o3-dapi-core/-/o3-dapi-core-0.1.2.tgz#4f961cfda6dae628c8102225edc26d60db94120c"
+o3-dapi-core@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/o3-dapi-core/-/o3-dapi-core-0.2.0.tgz#c931a8953ad1d5e357f8941dc1734e00d147b985"
   dependencies:
     browserify-cipher "~1.0.1"
     buffer "~5.2.1"
@@ -1713,9 +1713,9 @@ o3-dapi-core@0.1.2:
     randomfill "~1.0.4"
     socket.io-client "~2.2.0"
 
-o3-dapi-neo@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/o3-dapi-neo/-/o3-dapi-neo-0.1.2.tgz#7df86002641fb4ed4915de9057b327b2fe95a090"
+o3-dapi-neo@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/o3-dapi-neo/-/o3-dapi-neo-0.2.0.tgz#74ce1f3b1847f82d709b701a373deb5171756186"
 
 object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
