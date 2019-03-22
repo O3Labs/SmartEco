@@ -1,6 +1,6 @@
 {
   "name": "smarteco",
-  "version": "1.0.7",
+  "version": "1.0.14",
   "description": "",
   "main": "lib/smartEco.min.js",
   "scripts": {
@@ -18,8 +18,9 @@
     "url": "https://github.com/O3Labs/neodapi-provider-engine/issues"
   },
   "dependencies": {
-    "o3-dapi-core": "0.2.0",
-    "o3-dapi-neo": "0.2.0"
+    "o3-dapi-core": "0.3.0",
+    "o3-dapi-neo": "0.4.2",
+    "o3-dapi-neoclient": "^0.0.2"
   },
   "devDependencies": {
     "ts-loader": "5.2.2",
