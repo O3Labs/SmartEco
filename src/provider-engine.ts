@@ -1,6 +1,7 @@
 import { NEOProvider, NEOProviderPayload, NEOProviderAPI } from "./provider";
 import o3dapi from 'o3-dapi-core';
 import O3dapiNeo from "o3-dapi-neo";
+import o3dapiNeoClient from 'o3-dapi-neoclient';
 
 export class SmartEcoRouter {
     protected _working: boolean;
@@ -10,6 +11,7 @@ export class SmartEcoRouter {
 
     constructor() {
         o3dapi.initPlugins([O3dapiNeo]);
+        o3dapi.NEO.setClientPlugin(o3dapiNeoClient);
         const o3API: NEOProviderAPI = {
             getNetworks: o3dapi.NEO.getNetworks,
             getProvider: o3dapi.NEO.getProvider,

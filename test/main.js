@@ -117,7 +117,7 @@ function invokeRead() {
       scriptHash: invokeReadScriptHashEle.value,
       operation: invokeReadOperationEle.value,
       args: invokeReadArgsEle.value && JSON.parse(invokeReadArgsEle.value),
-      network: networksEle.value,
+      network: "TestNet"
     })
     .then(handleSuccess)
     .catch(handleError);

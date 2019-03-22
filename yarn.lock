@@ -1827,10 +1827,10 @@ o3-dapi-neo@0.4.2:
   resolved "https://registry.yarnpkg.com/o3-dapi-neo/-/o3-dapi-neo-0.4.2.tgz#dd02bdd874e937f819610746d4c8f42742f19a01"
   integrity sha512-scdjsvVCZfnrQIUIQ8h1+IgFxSTbieLHCfifmVbW8LdI6NOlL5Z0KCvhCx07/TULjBr/ni4f8im7wDrA8+HQMw==
 
-o3-dapi-neoclient@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/o3-dapi-neoclient/-/o3-dapi-neoclient-0.0.2.tgz#0ad0332e5106e19943d572d92f324c0267556dd3"
-  integrity sha512-LrYE3BwYx1diS4Bk25mrKGdkfa4vTE+AVG+9Y6VQF5PXm0YRMOulr5gQCB7p13nBNU955XBH734JWrxEU6fw3w==
+o3-dapi-neoclient@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/o3-dapi-neoclient/-/o3-dapi-neoclient-0.0.3.tgz#79d440793a7231b210b18fbf2f69743cd4caabeb"
+  integrity sha512-00uxRxNEOQYSdeN2Rd8FBWo/Als3m4rzf4qPEjZkIw8BeZK7SaPWZ9nwP0fmyI/Ul3nwRMHvic1QyEcz0N+uSQ==
   dependencies:
     "@cityofzion/neon-js" "3.11.0"
     bignumber.js "^8.1.1"
